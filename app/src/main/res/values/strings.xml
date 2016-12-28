@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Zoom Tile</string>
+    <string name="pref_write_secure_settings" translatable="false">write_secure_settings</string>
     <string name="activity_title" translatable="false">Zoom Gesture Tile</string>
     <string name="source_url" translatable="false">https://goo.gl/7P2K6F</string>
     <string name="zoomgesture">Zoom gesture</string>

@@ -4,7 +4,7 @@
         android:title="@string/permissions">
 
         <Preference
-            android:key="write_secure_settings"
+            android:key="@string/pref_write_secure_settings"
             android:title="@string/write_secure_settings_permission"/>
     </PreferenceCategory>
 

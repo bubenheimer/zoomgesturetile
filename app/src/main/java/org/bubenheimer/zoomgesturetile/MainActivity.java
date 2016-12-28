@@ -44,17 +44,18 @@ public final class MainActivity extends AppCompatActivity {
 
     public static final class SettingsFragment extends PreferenceFragment
             implements Preference.OnPreferenceClickListener {
-        private static final String KEY_WRITE_SECURE_SETTINGS = "write_secure_settings";
-
-        private Preference writeSecureSettings;
-
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
 
-            writeSecureSettings = findPreference(KEY_WRITE_SECURE_SETTINGS);
-            writeSecureSettings.setOnPreferenceClickListener(this);
+            getWriteSecureSettingsPreference().setOnPreferenceClickListener(this);
+        }
+
+        @Override
+        public void onDestroy() {
+            getWriteSecureSettingsPreference().setOnPreferenceClickListener(null);
+            super.onDestroy();
         }
 
         @Override
@@ -72,8 +73,13 @@ public final class MainActivity extends AppCompatActivity {
             super.onResume();
 
             final Context context = getContext();
-            writeSecureSettings.setSummary(isWriteSecureSettingsPermissionGranted(context)
-                    ? R.string.granted : R.string.not_granted);
+            getWriteSecureSettingsPreference().setSummary(
+                    isWriteSecureSettingsPermissionGranted(context) ?
+                            R.string.granted : R.string.not_granted);
+        }
+
+        private Preference getWriteSecureSettingsPreference() {
+            return findPreference(getContext().getString(R.string.pref_write_secure_settings));
         }
     }
 }

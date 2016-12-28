@@ -6,7 +6,8 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 public final class ZoomGestureTile extends TileService {
-    private static final String DISPLAY_ZOOM_ENABLED = "accessibility_display_zoom_enabled";
+    private static final String DISPLAY_ZOOM_ENABLED =
+            "accessibility_display_magnification_enabled";
 
     @Override
     public void onStartListening() {

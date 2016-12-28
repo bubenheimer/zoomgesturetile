@@ -15,3 +15,5 @@ This app is forked from another quick settings tile app from Francesco Franco, D
 Quick settings tiles are available in Android Nougat (7.0) and later. This app will not work in earlier Android versions.
 
 All images are derived from Apache-licensed clip art in Android Studio 2.3.
+
+This project is licensed under the terms of the Apache License Version 2.0.

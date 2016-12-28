@@ -2,24 +2,19 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.franco.demomode"
+        applicationId "org.bubenheimer.zoomgesturetile"
         minSdkVersion 24
         targetSdkVersion 25
-        versionName "1.0.1"
-        versionCode getVersionCodeTimestamp()
-        archivesBaseName = "DemoModeTile-${android.defaultConfig.versionName}"
+        versionName "1.0"
+        versionCode 1
     }
 
     signingConfigs {
         release {
             readKeystoreProperties('release')
-        }
-
-        debug {
-            readKeystoreProperties('debug')
         }
     }
 
@@ -28,38 +23,32 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    lintOptions {
-        abortOnError false
-        checkAllWarnings false
-        disable 'InvalidPackage'
-        tasks.lint.enabled = false
-    }
-
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-    }
-
     buildTypes {
         release {
             debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [vmSafeModeEnabled: "false"]
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
-            minifyEnabled false
+            minifyEnabled true
+            useProguard false
             shrinkResources false
-            manifestPlaceholders = [vmSafeModeEnabled: "true"]
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 
 def readKeystoreProperties(def configName) {
-    def propsFile = rootProject.file('../../keystore.properties')
+    def propsFile = file('file:///' + KEYSTORE_PROPERTIES_FILE)
 
     if (propsFile.exists()) {
         def props = new Properties()
@@ -71,13 +60,6 @@ def readKeystoreProperties(def configName) {
     }
 }
 
-def getVersionCodeTimestamp() {
-    return new Date().format('yyMMddHHmm').toInteger()
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:25.0.1'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.android.support:design:25.1.0'
 }

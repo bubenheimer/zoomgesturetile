@@ -1,6 +1,5 @@
 package org.bubenheimer.zoomgesturetile;
 
-import android.content.Intent;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
@@ -17,10 +16,12 @@ public final class ZoomGestureTile extends TileService {
     @Override
     public void onClick() {
         if (!Utils.isWriteSecureSettingsPermissionGranted(this)) {
-            final Intent mainActivity = new Intent(this, MainActivity.class);
-            mainActivity.setAction(Utils.MISSING_PERMISSION);
-            mainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(mainActivity);
+            unlockAndRun(new Runnable() {
+                @Override
+                public void run() {
+                    showDialog(Utils.getPermissionsReminderDialog(ZoomGestureTile.this));
+                }
+            });
         } else {
             final Tile qsTile = getQsTile();
             final boolean enable = qsTile.getState() == Tile.STATE_INACTIVE;

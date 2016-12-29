@@ -1,7 +1,7 @@
 <resources>
-    <style name="ZoomGestureTileTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
+    <style name="ZoomGestureTileTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary</item>
         <item name="android:colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/primary</item>
         <item name="android:windowLightStatusBar">true</item>

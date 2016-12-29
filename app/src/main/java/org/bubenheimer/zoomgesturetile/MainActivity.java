@@ -1,45 +1,25 @@
 package org.bubenheimer.zoomgesturetile;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.databinding.DataBindingUtil;
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-
-import org.bubenheimer.zoomgesturetile.databinding.ActivityMainBinding;
+import android.widget.Toolbar;
 
 import static org.bubenheimer.zoomgesturetile.Utils.isWriteSecureSettingsPermissionGranted;
 
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends Activity {
     @Override
-    protected void onCreate(final @Nullable Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActivityMainBinding binding =
-                DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        setActionBar(binding.toolbar);
+        setActionBar((Toolbar) findViewById(R.id.toolbar));
 
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.prefs_frame, new SettingsFragment())
                 .commit();
-
-        if (Utils.MISSING_PERMISSION.equals(getIntent().getAction())) {
-            final Snackbar snackbar = Snackbar.make(binding.getRoot(),
-                    R.string.permission_needs_to_be_granted, Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(R.string.ok, new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    snackbar.dismiss();
-                }
-            });
-            snackbar.show();
-        }
     }
 
     public static final class SettingsFragment extends PreferenceFragment
@@ -60,11 +40,7 @@ public final class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onPreferenceClick(final Preference preference) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.permission_request_title)
-                    .setMessage(getString(R.string.write_secure_settings_permission_msg,
-                            BuildConfig.APPLICATION_ID))
-                    .show();
+            Utils.getPermissionsReminderDialog(getContext()).show();
             return false;
         }
 
@@ -72,9 +48,8 @@ public final class MainActivity extends AppCompatActivity {
         public void onResume() {
             super.onResume();
 
-            final Context context = getContext();
             getWriteSecureSettingsPreference().setSummary(
-                    isWriteSecureSettingsPermissionGranted(context) ?
+                    isWriteSecureSettingsPermissionGranted(getContext()) ?
                             R.string.granted : R.string.not_granted);
         }
 

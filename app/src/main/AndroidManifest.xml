@@ -18,7 +18,6 @@
 
         <activity
             android:name="org.bubenheimer.zoomgesturetile.MainActivity"
-            android:label="@string/activity_title"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

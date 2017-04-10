@@ -5,8 +5,7 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 public final class ZoomGestureTile extends TileService {
-    private static final String DISPLAY_ZOOM_ENABLED =
-            "accessibility_display_magnification_enabled";
+    private static final String DISPLAY_ZOOM_ENABLED = "accessibility_display_magnification_enabled";
 
     @Override
     public void onStartListening() {
@@ -16,12 +15,7 @@ public final class ZoomGestureTile extends TileService {
     @Override
     public void onClick() {
         if (!Utils.isWriteSecureSettingsPermissionGranted(this)) {
-            unlockAndRun(new Runnable() {
-                @Override
-                public void run() {
-                    showDialog(Utils.getPermissionsReminderDialog(ZoomGestureTile.this));
-                }
-            });
+            unlockAndRun(() -> showDialog(Utils.getPermissionsReminderDialog(ZoomGestureTile.this)));
         } else {
             final Tile qsTile = getQsTile();
             final boolean enable = qsTile.getState() == Tile.STATE_INACTIVE;

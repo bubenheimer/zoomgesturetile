@@ -3,13 +3,21 @@ buildscript {
         maven { url MAVEN_REPOSITORY_URL}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha15'
     }
 }
 
 allprojects {
     repositories {
         maven { url MAVEN_REPOSITORY_URL}
+    }
+}
+
+subprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.deprecation = true
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 'android-P'
 
     defaultConfig {
         applicationId 'org.bubenheimer.zoomgesturetile'
@@ -40,6 +40,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+dependencies {
+    implementation 'androidx.preference:preference:1.0.0-alpha1'
 }
 
 def readKeystoreProperties(def configName) {

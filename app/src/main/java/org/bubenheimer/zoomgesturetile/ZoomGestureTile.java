@@ -31,9 +31,6 @@ public final class ZoomGestureTile extends TileService {
         // The next line should not be necessary, but
         // LineageOS 14.1 does not handle setState by itself properly; it only shows a change
         // if the icon changes, too. The two icons below are identical.
-        qsTile.setIcon(enabled ?
-                Icon.createWithResource(this, R.drawable.ic_zoom_vector) :
-                Icon.createWithResource(this, R.drawable.ic_zoom_vector_copy));
         qsTile.updateTile();
     }
 

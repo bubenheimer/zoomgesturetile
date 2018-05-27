@@ -1,13 +1,14 @@
 package org.bubenheimer.zoomgesturetile;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import static org.bubenheimer.zoomgesturetile.Utils.isWriteSecureSettingsPermissionGranted;
 
-public final class MainActivity extends Activity {
+public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,20 +16,26 @@ public final class MainActivity extends Activity {
 
         setActionBar(findViewById(R.id.toolbar));
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.prefs_frame, new SettingsFragment())
                 .commit();
     }
 
-    public static final class SettingsFragment extends PreferenceFragment
+    public static final class SettingsFragment extends PreferenceFragmentCompat
             implements Preference.OnPreferenceClickListener {
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settings);
 
             getWriteSecureSettingsPreference().setOnPreferenceClickListener(this);
+        }
+
+        @Override
+        public void onCreatePreferences(
+                final Bundle savedInstanceState,
+                final String rootKey) {
+            setPreferencesFromResource(R.xml.settings, rootKey);
         }
 
         @Override
